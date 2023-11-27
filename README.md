@@ -3,8 +3,20 @@
 
 px-deploy create -n px1 -t px</br>
 </br>
+curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash</br>
+ln /root/kustomize /usr/sbin/kustomize</br>
 yum install wget -y</br>
-kubectl patch storageclass px-csi-db -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</br>
+kubectl apply -f kubeflow-sc.yaml
+kubectl patch storageclass kubeflow-storage -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</br>
+git clone https://github.com/kubeflow/manifests.git</br>
+cd manifests</br>
+Single command install:</br>
+while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done</br>
+
+
+ARCHIVE-ONLY
+yum install wget -y</br>
+kubectl patch storageclass kubeflow-storage -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</br>
 </br>
 CPU-only</br>
 curl -sfL https://get.k3ai.in | bash -s -- --cpu --plugin_kfpipelines</br>
