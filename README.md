@@ -6,7 +6,7 @@ px-deploy create -n px1 -t px</br>
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash</br>
 ln /root/kustomize /usr/sbin/kustomize</br>
 yum install wget -y</br>
-kubectl apply -f kubeflow-sc.yaml
+kubectl apply -f kubeflow-sc.yaml</br>
 kubectl patch storageclass kubeflow-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</br>
 git clone https://github.com/kubeflow/manifests.git</br>
 cd manifests</br>
